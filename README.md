@@ -1,6 +1,6 @@
-# WorkBuddy 技能集合
+# WorkBuddy 办公技能合集
 
-基于 WorkBuddy AI 助手的一套**轻量、高性价比**的技能工具集，聚焦 "够用、好用、容易维护"。
+基于 WorkBuddy AI 助手的一套**轻量、高性价比**的办公技能合集，聚焦 "够用、好用、容易维护"。PPT、PDF、Word 三件套齐了，再加一个技能创建框架。
 
 ---
 
@@ -37,6 +37,10 @@
 
 类似的轻量思路：没有预制文档模板，每次按设计规范从零生成。核心处理好了 PDF 最容易出坑的地方——页码管理（封面目录无页码、正文从 1 开始）、分页控制（禁止空 div 分页符）、目录超链接。
 
+### docx — Word 文档创建与编辑
+
+同样是"两个文件打天下"：`SKILL.md` 主指令 + 一份按需加载的 python-docx 参考。覆盖创建、读取、编辑、套模板、格式转换（.doc/.docx/PDF）五条路由。核心沉淀的是 python-docx 的防坑经验——中文字体双设（`w:eastAsia`）、标题样式自带蓝色底线的清除、run 边界的文本替换、XML 层的单元格底色——这些坑踩过一次就硬编码进规范，不再每次重新踩。
+
 ### skill-creator — 技能创建框架
 
 把创建 WorkBuddy 技能这件事本身工程化了：有脚手架（`init_skill.py`）、打包工具（`package_skill.py`）、校验器（`quick_validate.py`）。五阶段工作流 + 确认门机制 + 反模式清单，确保产出的技能质量一致。
@@ -56,6 +60,7 @@
 - **HTML + Tailwind CSS + FontAwesome** — 内容与样式，所有配色用 Tailwind 类名，不用 HEX
 - **Playwright** — HTML 渲染，PDF 生成
 - **PptxGenJS** — PPTX 转换
+- **python-docx + pandoc + LibreOffice** — Word 文档创建、读取与格式转换
 - **Python 3** — 辅助脚本（脚手架、打包、校验）
 - **Bash** — 文件重编号工具
 
@@ -72,6 +77,7 @@ cp -r ppt-creator ~/.workbuddy/skills/
 然后在 WorkBuddy 对话中触发：
 - "帮我做一个关于 Q2 复盘的分析报告 PPT，8 页"
 - "把这篇文档转成 PDF"
+- "帮我生成一份项目周报 Word 文档"
 - "帮我创建一个读取网站并生成摘要的技能"
 
 ---
@@ -82,7 +88,8 @@ cp -r ppt-creator ~/.workbuddy/skills/
 workbuddy-skills/
 ├── skill-creator/            # 技能创建框架
 ├── ppt-creator/              # PPT 生成工具
-└── pdf-creator/              # PDF 生成工具
+├── pdf-creator/              # PDF 生成工具
+└── docx/                     # Word 文档创建与编辑
 ```
 
 每个技能目录结构统一：
